@@ -109,29 +109,60 @@ h1 {
   font-size: 2em;
   text-align: center;
 }
+h2 {
+  font-size: 1.5em;
+  color: #888;
+  text-align: center;
+}
 ol li {
   list-style: decimal;
 }
 
-.install .buttonArea {
+.buttonArea {
   text-align: center;
 }
-.install .button {
+.button {
   cursor: pointer;
   padding: 10px 12px;
   line-height: 1em;
   background: #555;
   color: #fff;
   border-radius: 3px;
-  font-size: 1.5em;
+  font-size: 1.4em;
   display: inline-block;
   text-decoration: none;
 }
-
-.code {
-  clear: both;
+.button.showScript {
+  background: #888;
 }
-.code pre {
+
+.script {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255,255,255,0.9);
+}
+
+.script code {
+  width: 800px;
+  padding: 20px;
+  margin: 150px auto 0;
+  color: #eee;
+  background: #222;
+  display: block;
+  border-radius: 3px;
+}
+code pre {
   overflow: hidden;
   font-family: monospace;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.button.close {
+  background: #888;
+  margin-top: 20px;
 }

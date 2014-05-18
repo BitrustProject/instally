@@ -53,10 +53,17 @@ app.controller('instally', ['$scope', function($scope){
       if (app.deb) {
         initialPackages.wget = true;
         if (typeof app.deb == 'string') {
-          script.push('FILE=`mktemp`;wget -O - '+app.deb+'; | dpkg --install $FILE');
+          script.push('FILE=`mktemp`');
+          script.push('wget -O $FILE '+app.deb);
+          script.push('dpkg --install $FILE');
         } else {
           needsBits = true;
-          script.push('FILE=`mktemp`;if [ ${MACHINE_TYPE} == "x86_64" ]; then wget -O $FILE '+app.deb['amd64']+'; else wget -O $FILE '+app.deb['i386']+'; fi; dpkg --install $FILE');
+          script.push('FILE=`mktemp`');
+          script.push('if [ ${MACHINE_TYPE} == "x86_64" ]');
+          script.push('  then wget -O $FILE '+app.deb['amd64']);
+          script.push('  else wget -O $FILE '+app.deb['i386']);
+          script.push('fi');
+          script.push('dpkg --install $FILE');
         }
       }
     });
@@ -71,11 +78,12 @@ app.controller('instally', ['$scope', function($scope){
       script.unshift('MACHINE_TYPE=`uname -m`');
     }
     script.push('echo "Instally is finished"');
-    script.push('sleep 10');
     return script.join(';\n')+';';
   };
 
   $scope.prepare = function(){
+    $scope.script = buildScript();
+
     var Tar = require('tar-js');
     var tape = new Tar();
 
@@ -83,12 +91,18 @@ app.controller('instally', ['$scope', function($scope){
 
     var desktopFile = '[Desktop Entry]\nType=Application\nVersion=1.0\nName=Instally\nTerminal=true\nExec=bash -c "export PATH=$PATH:`dirname %k`;'+header+' sudo script.sh"';
     tape.append('instally/instally.desktop', desktopFile);
-    tape.append('instally/script.sh', buildScript());
+    tape.append('instally/script.sh', $scope.script);
 
 
     var uri = "data:application/tar;base64," + btoa(uint8ToString(tape.out));
 
     $scope.downloadUri = uri;
+  };
+  $scope.showScript = function(){
+    $scope.scriptVisible = true;
+  };
+  $scope.hideScript = function(){
+    $scope.scriptVisible = false;
   };
 
   var apps = [];

@@ -27,8 +27,24 @@
       <li class="whenReady">Extract the archive</li>
       <li class="whenReady">Run the file called "Instally"</li>
     </ol>
+    <h2 class="whenReady">&mdash; or &mdash;</h2>
+    <ol class="whenReady">
+      <li>Click "Manual Install"</li>
+      <li>Copy and paste the script into a plain text editor</li>
+      <li>Review the install script</li>
+      <li>Run the install script as root</li>
+    </ol>
     <div class="buttonArea">
       <a class="button whenReady" href="{{ downloadUri }}" download="instally.tar">Download</a>
+      <a class="button showScript whenReady" ng-click="showScript()">Manual Install</a>
+    </div>
+  </div>
+  <div class="script" ng-show="scriptVisible">
+    <code>
+      <pre>{{ script }}</pre>
+    </code>
+    <div class="buttonArea">
+      <a class="button close" ng-click="hideScript()">Close</a>
     </div>
   </div>
 </div>
