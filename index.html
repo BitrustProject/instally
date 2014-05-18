@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Instally</title>
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:300">
+  <link rel="stylesheet" type="text/css" href="instally.css">
+</head>
+<body ng-app="app">
+
+<div ng-controller="instally" class="main" ng-class="{visible: true}">
+  <div class="categories">
+    <div ng-repeat="categoryName in categoryList" class="category">
+      <h2>{{ categoryName }}</h2>
+      <ul class="apps">
+        <li ng-repeat="app in apps | filter:{category: categoryName}" class="app" ng-class="{selected: app.selected}" ng-click="app.selected = !app.selected; prepare();">
+          <div class="icon" style="background-image:url({{ app.icon }})"></div>
+          <h3>{{ app.title }}</h3>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="install" ng-class="{ready: (apps | filter:{selected: true}).length}">
+    <h1>Instally</h1>
+    <ol>
+      <li>Select the apps you want</li>
+      <li class="whenReady">Click the "Download" button</li>
+      <li class="whenReady">Extract the archive</li>
+      <li class="whenReady">Run the file called "Instally"</li>
+    </ol>
+    <div class="buttonArea">
+      <a class="button whenReady" href="{{ downloadUri }}" download="instally.tar">Download</a>
+    </div>
+  </div>
+</div>
+
+<script src="angular.min.js"></script>
+<script src="tar.js"></script>
+<script src="instally.js"></script>
+</body>
+</html>
