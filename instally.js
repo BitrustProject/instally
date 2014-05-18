@@ -286,6 +286,4 @@ app.controller('instally', ['$scope', function($scope){
   //rhythmbox, banshee, clementine, shotwell, 
 
   $scope.categoryList = ['Browsers', 'Media', 'Tools', 'Creative', 'Fun', 'Interface', 'Communication'];
-
-  //TODO: add dropbox
 }]);
